@@ -1,2 +1,34 @@
 # webapp-eval-django
-Django benchmark for a typical webapp
+
+This example application is part of an evaluation of web environments. The objective is to implement the same requirements and compare the results in terms of effort, performance and maintainability.
+
+This particular repository tests the [Python](https://www.python.org/)/[Django](https://www.djangoproject.com/) environment.
+
+## Common requirements
+
+- Public homepage
+- Authentication system with password and email confirmation
+- Authentication system with Github
+- Authentication system with OpenID connect
+- Authenticated page to display user info
+- Authenticated form to alter password
+- Permissions system
+- I18n, adapt to browser headers
+- OAuth 2 provider
+- API with OAuth auth
+- API method to obtain token via user and pw
+- API to retrieve user info in JSON
+- API to update user info in JSON
+- Fast dev cycle
+- Structured logging
+- Bonus: JavaScript pipeline integration
+- Bonus: real-time (websockets) user change notification
+- Bonus: small deployment size (containerized)
+- Bonus: efficiently deal with multiple cores
+
+## Links to tests of other environments
+
+- Go (TODO)
+- Elixir/Phoenix (TODO)
+- Scala/Play (TODO)
+- Haskell/Yesod (TODO)
