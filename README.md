@@ -27,6 +27,7 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - Bonus: efficiently deal with multiple cores
 - Bonus: serve static content with correct headers
 - Bonus: call external API
+- Bonus: unique request ID
 
 ## Important additional modules used
 
