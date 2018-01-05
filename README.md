@@ -25,6 +25,18 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - Bonus: real-time (websockets) user change notification
 - Bonus: small deployment size (containerized)
 - Bonus: efficiently deal with multiple cores
+- Bonus: serve static content with correct headers
+- Bonus: call external API
+
+## Important additional modules used
+
+TODO
+
+## How to run project
+
+1. Create database __webapp_django__ manually
+1. Configure database connection parameters in __webapp/settings.py__
+1. __./manage.py runserver__
 
 ## Links to tests of other environments
 

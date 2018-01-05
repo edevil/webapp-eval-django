@@ -73,10 +73,22 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+DB_USE_SSL = os.environ.get('DB_USE_SSL', 'false')
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'webapp_django',
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': '5432',
+        'CONN_MAX_AGE': 86400,
+        'OPTIONS': {
+            'keepalives_idle': 30,
+            'keepalives_interval': 5,
+            'keepalives_count': 2,
+            'sslmode': 'prefer' if DB_USE_SSL == 'false' else 'require',
+        }
     }
 }
 
