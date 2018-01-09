@@ -21,6 +21,7 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - API to update user info in JSON
 - Fast dev cycle
 - Structured logging
+- Web tests
 - Bonus: JavaScript pipeline integration
 - Bonus: real-time (websockets) user change notification
 - Bonus: small deployment size (containerized)
@@ -37,6 +38,7 @@ TODO
 
 1. Create database __webapp_django__ manually
 1. Configure database connection parameters in __webapp/settings.py__
+1. __./manage.py createsuperuser__
 1. __./manage.py runserver__
 
 ## Links to tests of other environments
