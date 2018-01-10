@@ -6,12 +6,12 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 
 ## Common requirements
 
-- Public homepage
-- Authentication system with password and email confirmation
-- Authentication system with Github
+- Public homepage *done*
+- Authentication system with password and email confirmation *done*
+- Authentication system with Github *done*
 - Authentication system with OpenID connect
-- Authenticated page to display user info
-- Authenticated form to alter password
+- Authenticated page to display user info *done*
+- Authenticated form to alter password *done*
 - Permissions system
 - I18n, adapt to browser headers
 - OAuth 2 provider
