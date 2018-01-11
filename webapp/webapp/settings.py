@@ -108,7 +108,7 @@ DB_USE_SSL = os.environ.get('DB_USE_SSL', 'false')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'webapp_django',
+        'NAME': os.getenv('DB_NAME', 'webapp_django'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
