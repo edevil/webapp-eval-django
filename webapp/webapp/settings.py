@@ -175,10 +175,6 @@ pre_chain = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'root': {
-        'handlers': ['default'],
-        'level': 'DEBUG',
-    },
     'formatters': {
         'colored': {
             '()': structlog.stdlib.ProcessorFormatter,
@@ -189,13 +185,21 @@ LOGGING = {
     'handlers': {
         'default': {
             'class': 'logging.StreamHandler',
+        },
+        'stdlibconverter': {
+            'class': 'logging.StreamHandler',
             'formatter': 'colored',
         },
     },
     'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['default'],
+            'propagate': False,
+        },
         'django': {
             'level': 'INFO',
-            'handlers': ['default'],
+            'handlers': ['stdlibconverter'],
             'propagate': False,
         },
     }
