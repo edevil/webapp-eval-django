@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import structlog
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -75,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'webapp.middleware.add_request_id',
 ]
 
 ROOT_URLCONF = 'webapp.urls'
@@ -160,57 +163,60 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Logging configuration
+timestamper = structlog.processors.TimeStamper(fmt="%Y-%m-%d %H:%M:%S")
+pre_chain = [
+    # Add the log level and a timestamp to the event_dict if the log entry
+    # is not from structlog.
+    structlog.stdlib.add_log_level,
+    structlog.stdlib.add_logger_name,
+    timestamper,
+]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'root': {
-        'handlers': ['console'],
-        'propagate': True,
+        'handlers': ['default'],
         'level': 'DEBUG',
     },
     'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(name)s %(filename)s:%(lineno)d %(process)d %(thread)d %(message)s'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
+        'colored': {
+            '()': structlog.stdlib.ProcessorFormatter,
+            'processor': structlog.dev.ConsoleRenderer(colors=True),
+            'foreign_pre_chain': pre_chain,
         },
     },
     'handlers': {
-        'console': {
-            'level': 'DEBUG',
+        'default': {
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'colored',
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['require_debug_false']
-        }
     },
     'loggers': {
         'django': {
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-        'django.channels': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
+            'level': 'INFO',
+            'handlers': ['default'],
+            'propagate': False,
         },
     }
 }
+
+structlog.configure_once(
+    processors=[
+        structlog.stdlib.add_log_level,
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        timestamper,
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.dev.ConsoleRenderer(colors=True),
+        structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+    ],
+    context_class=structlog.threadlocal.wrap_dict(dict),
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
+)
 
 SITE_ID = 1
