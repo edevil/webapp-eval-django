@@ -185,9 +185,6 @@ LOGGING = {
     'handlers': {
         'default': {
             'class': 'logging.StreamHandler',
-        },
-        'stdlibconverter': {
-            'class': 'logging.StreamHandler',
             'formatter': 'colored',
         },
     },
@@ -199,7 +196,7 @@ LOGGING = {
         },
         'django': {
             'level': 'INFO',
-            'handlers': ['stdlibconverter'],
+            'handlers': ['default'],
             'propagate': False,
         },
     }
@@ -214,7 +211,6 @@ structlog.configure_once(
         structlog.processors.StackInfoRenderer(),
         structlog.processors.format_exc_info,
         structlog.processors.UnicodeDecoder(),
-        structlog.dev.ConsoleRenderer(colors=True),
         structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
     ],
     context_class=structlog.threadlocal.wrap_dict(dict),
