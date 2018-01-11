@@ -9,9 +9,11 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - Public homepage *done*
 - Authentication system with password and email confirmation *done*
 - Authentication system with Github *done*
-- Authentication system with OpenID connect
 - Authenticated page to display user info *done*
 - Authenticated form to alter password *done*
+- Unique request ID *done*
+- Structured logging *done*
+- Authentication system with OpenID connect
 - Permissions system
 - I18n, adapt to browser headers
 - OAuth 2 provider
@@ -20,7 +22,6 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - API to retrieve user info in JSON
 - API to update user info in JSON
 - Fast dev cycle
-- Structured logging
 - Web tests
 - Bonus: JavaScript pipeline integration
 - Bonus: real-time (websockets) user change notification
@@ -28,7 +29,6 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - Bonus: efficiently deal with multiple cores
 - Bonus: serve static content with correct headers
 - Bonus: call external API
-- Bonus: unique request ID
 
 ## Important additional modules used
 
