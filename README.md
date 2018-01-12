@@ -13,9 +13,9 @@ This particular repository tests the [Python](https://www.python.org/)/[Django](
 - Authenticated form to alter password *done*
 - Unique request ID *done*
 - Structured logging *done*
+- I18n, adapt to browser headers *done*
 - Authentication system with OpenID connect
 - Permissions system
-- I18n, adapt to browser headers
 - OAuth 2 provider
 - API with OAuth auth
 - API method to obtain token via user and pw
@@ -40,6 +40,17 @@ TODO
 1. Configure database connection parameters in __webapp/settings.py__
 1. __./manage.py createsuperuser__
 1. __./manage.py runserver__
+
+## i18n
+
+First extract messages to file:
+
+    django-admin makemessages -l pt
+
+Then compile messages:
+
+    django-admin compilemessages
+
 
 ## Links to tests of other environments
 
