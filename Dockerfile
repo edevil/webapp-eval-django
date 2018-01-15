@@ -14,4 +14,5 @@ ADD . /app
 WORKDIR /app
 RUN django-admin compilemessages
 RUN ./manage.py collectstatic --noinput
-ENTRYPOINT ["./manage.py"]
+USER nobody:nogroup
+CMD uwsgi -i uwsgi-production.ini
