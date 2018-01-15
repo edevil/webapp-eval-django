@@ -51,4 +51,5 @@ urllib3==1.22
 uWSGI==2.0.15
 wcwidth==0.1.7
 Werkzeug==0.14.1
+whitenoise==3.3.1
 wrapt==1.10.11
