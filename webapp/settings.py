@@ -14,6 +14,8 @@ import os
 
 import structlog
 
+from typing import List
+
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '^oo$eaa+)n5ia8uo%si9dz1bu1gbcav^)78lzze37%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: List[str] = []
 
 ADMINS = [('Andre', 'email@example.com')]  # TODO: changeme
 
