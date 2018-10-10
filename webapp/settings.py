@@ -12,11 +12,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+import sys
+
 import structlog
 
-from typing import List
-
 from django.utils.translation import gettext_lazy as _
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '^oo$eaa+)n5ia8uo%si9dz1bu1gbcav^)78lzze37%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS: List[str] = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] if DEBUG else os.getenv('ALLOWED_HOSTS', '').split()
 
 ADMINS = [('Andre', 'email@example.com')]  # TODO: changeme
 
@@ -71,6 +73,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'api',
     'portal',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
@@ -114,13 +117,13 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 DB_USE_SSL = os.environ.get('DB_USE_SSL', 'false')
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django_postgrespool2',
         'NAME': os.getenv('DB_NAME', 'webapp_django'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
         'PORT': '5432',
-        'CONN_MAX_AGE': 86400,
+        'CONN_MAX_AGE': 0,
         'OPTIONS': {
             'keepalives_idle': 30,
             'keepalives_interval': 5,
@@ -130,6 +133,11 @@ DATABASES = {
     }
 }
 
+DATABASE_POOL_ARGS = {
+    'max_overflow': 2,
+    'pool_size': 2,
+    'recycle': 3600,
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -178,7 +186,8 @@ USE_TZ = True
 STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')
 STATIC_URL = STATIC_HOST + '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' if not TESTING \
+    else 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Logging configuration
 timestamper = structlog.processors.TimeStamper(fmt="%Y-%m-%d %H:%M:%S")
