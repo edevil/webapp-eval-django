@@ -9,7 +9,7 @@ coverage==4.4.2
 cryptography==2.1.4
 decorator==4.1.2
 defusedxml==0.5.0
-Django==2.0.1
+Django==2.0.9
 django-allauth==0.34.0
 django-extensions==1.9.8
 flake8==3.5.0
